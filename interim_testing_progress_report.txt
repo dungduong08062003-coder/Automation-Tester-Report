@@ -1,0 +1,59 @@
+Report 19/1/2026
+
+Today I Learn :
+
+Page Object Model
+
+The goat of Page Object Model is split the project in to clear classes/ Packages so the project is easier to manage, maintain and fix s error
+
+we split the project by task like
+
+UI interaction task->Page(handle the question, how do I interact with page/component?)
+
+Test scenario ->Test (the scenario we will test, example  user can login ,user cannot log in with wrong password , user can checkout product)
+
+system/Infrastructure task -> Core(The test system work like Create WebDriver, open browser ,manage wait, close browser)
+
+Cross-cutting helper task  -> Utils (Support many place but not tied to UI or Test like read config file , read test data,...)
+
+we have many different the way that split the project 
+
+ 
+
+Encapsulate Selenium Page Object
+
+Encapsulation = hiding Selenium implementation details and exposing only meaningful actions
+
+We hide By, FindElement. WebDriverWait,...
+
+We expose meaningful actions like login(), AddToCart() ,....
+
+Encapsulation is Protected the test from UI changes or some error by people  like forget or use wrong wait, wrong locator, wrong action(click while submits)
+
+ 
+
+Configuration with Appsetting.json
+
+Configuration is Separate frequently changing values from test code
+
+Json is where store configuration values can change, accessed using a key
+
+Often use to config test system, data(url,browser,timeout) , this is few change 
+
+Data-Driven Testing
+
+Data-Driven Testing is the creation of test scripts where test data or output values are read data files instend of using thes hard-code values each time test run
+
+this generate multiple test cases example in login input username and password have the case complete or wrong or user not input username , a different example like search Product  like iPhone 17 have result but @@@ not have result
+
+OLE DB is bridge connect data driven testing and Test
+
+Often use to provide test data , data(username , password, Input), Constantly changing.
+
+Today I pactice coding test automation according to structure Page Object Model
+
+Issue:  I have no problem today
+
+ 
+
+Tomorrow Plan: Continue leaning Automation framework, Practice coding the configuration and data-driven testing sections

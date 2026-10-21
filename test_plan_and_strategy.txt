@@ -1,0 +1,169 @@
+Report 2/2/2026
+
+Restclient is a "HTTP client" used to send RestRequest objects to a server and receive RestResponse objects. We configure global settings here.
+
+we usually configure the following in RestClient:
+
+BaseURL
+
+Authentication
+
+Timeout /Proxy / Encoding
+
+Default header
+
+Key features:
+
+RestClient reuse the internal connection HttpClient , which is good for performance 
+
+Thread-safe for multiple simultaneous requests (create a shared client) 
+
+you can have multiple .RestClient(each pointer 1 to different service)
+
+RestRequest describes a specific endpoint, What HTTP method(GET/ POST/ PUT/ PATCH/ DELETE),whether there are any query paramesters, header, bodies, files
+
+We configure  in RestRequest :
+
+Resource path : will be  concatenate the Base URL with the full URL "posts/1"
+
+HTTP method : Method .Get, Method .Post,..
+
+Query parameters: AddQueryParamester("q", "restsharp")
+
+Headers: AddHeader("Accept", "application/json")
+
+Body: JSON, Form, File upload
+
+key feature:
+
+RestRequest is short-term(each call creates a new instance) 
+
+The request can override the configuration from the client 
+
+Serialization: serializes object to JSON  using .AddJsonBodySystem.Text.Json
+
+How the RestClient and RestRequest work together:
+
+Configure the client(Base URL , authentication, timeout)
+
+Create Request for a specific Endpoint 
+
+Send by client: await client.ExecuteAsync(request)  or GetAsync/ PostAsync/....
+
+Handle the response (status code, content, headers, error)  
+
+example:
+
+var client = new RestClient("linkAPI");
+ 
+
+//GET(READ)
+var request = new RestRequest("/posts/1", Method.Get);
+var respone = await client.ExecuteAsync(request);
+if (!respone.IsSuccessful) throw new Exception(respone.ErrorMessage ??
+    respone.Content);
+Console.WriteLine(respone.Content);
+
+ 
+
+// POST(CREATE)
+var createReaq = new RestRequest("posts", Method.Post)
+    .AddJsonBody(new { title = "Hello", body = "From RestSharp",userId = 1});
+var createRes = await client.ExecuteAsync(createReaq);
+Console.WriteLine($"{(int)createRes.StatusCode} - {createRes.Content}");
+
+ 
+
+//PUT(update)
+var putReq = new RestRequest("posts/1", Method.Put)
+    .AddJsonBody(new {id = 1, title = "Update", body = "Update body", userId = 1});
+var putRes = await client.ExecuteAsync(putReq);
+//DELETE 
+var delReq = new RestRequest("posts/1", Method.Delete);
+var delRes = await client.ExecuteAsync(delReq);
+
+ 
+
+HTTP(HyperText transfer Protocol)  is protocol that use transfer data between client and server to internet(GET/PUT/PATCH/POST/DELETE)
+
+HTTP : Unencrypted out going data
+
+HTTPS: Encrypted data (SSL/TLS)
+
+RestClient->HTTP client
+
+RestRequest -> HTTP Request
+
+ExecuteAsync -> send HTTP
+
+response ->HTTP response
+
+ 
+
+Creating the client 
+
+Constructors a RestSharp Client  can be instantiated by one of its constructor. two most commonly used constructor are:
+
+//creates  a client with default options to call a given base URL
+
+var client = new RestClient("https://localhost:5000");
+
+Provide client options the most common way to create a client to use the constructor with options
+
+var  options = new RestCLientOptions("https://localhost:5000"){
+
+        MaxTimeout = 1000
+
+};
+
+var client = new RestClient(options);
+
+ 
+
+Simple factory
+
+var options = new RestClientOptions("https://api.twitter.com/2")
+
+var client = new RestClient(Options, useClientFactory: true);
+
+ 
+
+RestSharp won't create a new one every time. Instead, it uses an internal factory to cache the HttpClient according to the BaseUrl
+
+-> each different BaseUrl get a separate one.
+
+->Other options (other than BaseUrl) do not affect.HttpClientHttpClientHttpClient
+
+ 
+
+ if you change other options (timeout, redirect, cert,.. )but still using BaseUrl, you still receive a old HttpClient
+
+-> I thought to change config but reality don apply
+
+Options don apply after first instance  has been spawned (because the attach to the handle/at the first time) include :HttpClient
+
+Credentials
+
+UseDefaultCredentials
+
+AutomaticDecompression
+
+PreAuthenticate
+
+FollowRedirects
+
+RemoteCertificateValidationCallback
+
+ClientCertificates
+
+MaxRedirects
+
+MaxTimeout
+
+UserAgent
+
+Expect100Continue
+
+Issue: no issues today
+
+Plan for tomorrow : continue learning RestSharp

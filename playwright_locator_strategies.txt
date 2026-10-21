@@ -1,0 +1,77 @@
+Report 22/1/2026
+
+ Today I learn :
+
+Bindings:
+
+when the automation connects process the specification to the application interfaces, the automation that connects the gherkins specifications to source code is called Binding.
+
+we have three main binding type:
+
+ Step Definition : The steps automates the scenarios at the step levels. That provide automation for the entire scenario, we code logic right this or call Driver/POM.
+
+Hooks : This can be used to perform additional automation logic on specific event (before/after scenario). usually Initialize WebDriver, clean browser, seed data, reset state 
+
+Step arguments  transformations: used when we want change data in step to special type
+
+ Step definitions:
+
+Like we talk the previous part The steps definition provide the connection method between our feature file application interfaces. It is the method in  C#  that connect the Gherkin steps to your real automation code.
+
+We have two step way write the step matching expressions: Cucumber expressions: 
+
+Cucumber expression(default and easy to read) used some placeholder type: {int}, {string}, {long},{decimal},{Datetime},{Guide},{word} or type for transformation provide.
+
+Regular Expression(regex) : when used regex type , you must add ^....$ to ensure Reqnroll recognizes it as a regex 
+
+Hooks
+
+Hooks are special methods run automation before/after events in implementation scenario process
+
+evens can be : start scenario, end scenario, run before test run process, after a feature
+
+we use it to:
+
+initialize WebDriver
+
+close WebDriver
+
+reset database
+
+seed test data
+
+types of hooks in reqnroll
+
+[BeforeTestRun]/[AfterTestRun]
+
+[BeforeFeature]/[AfterFeature]
+
+[BeforeScenario]/[AfterScenario]
+
+[BeforeStep]/[AfterStep]
+
+Step Argument Transformation can be used to apply a custom conversion step to argument in step definitions.
+
+Asynchronous Bindings
+
+Allow your Steps Definitions, Hooks , and other bindings to run using async / await 
+
+This is helpful when
+
+Calling web APIs
+
+database Operations
+
+waiting for I/O
+
+using selenium async APIs
+
+doing anything that naturally requires asynchronous operation
+
+ 
+
+Issue : I have no problem today
+
+ 
+
+Plan tomorrow: continue learn reqnroll document

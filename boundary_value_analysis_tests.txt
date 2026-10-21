@@ -1,0 +1,37 @@
+report 20/1/2026
+
+Today I learn:
+
+Browser Factory and WebDriver Factory:
+
+A Factory Pattern is used to encapsulate the complexity of creating an object.
+
+Two important idea behind Factory pattern :
+
+hide the logic initializing logic in side factory.
+
+refer to the object using a common interface instead of the concrete class 
+
+steps:
+
+1.We store browser value in the JSON file like appsetting.json  ("Environment:"{"Browser":"Edge",.....})
+
+2. we create TestConfig class read value from the JSON file and exposes them as properties
+
+3. Create a DriverFatory class that read the browser value from TestConfig and use its code some cases create IWebDriver when we use the browser application when automation testing like the case use Edge or Chrome  its in createDriver Method 
+
+4.In TestBase class when method setup we will call createDriver Method to create Browser
+
+Page Generator
+
+Page Generator will help clean code, We Used this to create multiple Page Objects as needed in one place, help us no needed create pages in multiple location with in Projects
+
+Extension Method 
+
+Used to standardize small technical actions, for example Grouping clear()+sendkeys()->EnterText() for convenient we call Entertext() method in Login()
+
+ 
+
+Issue: No Problem
+
+Plan tomorrow : Review previously learned Knowledge, continue practice small automation project in demoqua website

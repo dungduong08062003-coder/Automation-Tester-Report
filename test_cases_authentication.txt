@@ -1,0 +1,237 @@
+report 4/2/2026
+
+Get or Port parameters
+
+The default RestSharp parameter type is GetOrPortParameter. When we add by(without specifying the type), then it defaults to GetOrPost.AddParameter("name", "values").
+
+URL Standard Separator:
+
+[scheme]://[host]/[path] ? [query string]
+
+ 
+
+HTTP method dependency behavior:
+
+GET-parameter attached to the query string URL: url?name1=value1&name2=value2
+
+example
+
+            var client = new RestClient("url");
+            var request = new RestRequest("/posts", Method.Get);
+
+ 
+
+            //default AddParameter is GetOrPost
+            request.AddParameter("q","C# programming");
+            request.AddParameter("page",2);
+            //results: GET url?q=l%E1%BA%ADp+tr%C3%ACnh+C%23&page=2
+            var response = await client.ExecuteAsync(request);
+
+RestSharp will URL-encode name/value 
+
+If we want to write explicitly as a query, use:AddQueryParameter
+
+request.AddQueryParameter("q","C# programming");
+
+ 
+
+POST/PUT(without attach file) parameter are included in the application/x-www-form-urlencoded body: name=value1&name2=value2
+
+example:
+
+//POST/PUT không có file – form-urlencoded trong body
+
+ 
+
+var request2 = new RestRequest("login", Method.Post);
+
+ 
+
+//Body will be application/x-www-form-urlencode
+request2.AddParameter("username","dung");
+request2.AddParameter("password", "123456");
+
+ 
+
+var response2 = await client.ExecuteAsync(request2);
+
+Having attach file-> request will use multipart/ form-data, each parameter is a part
+
+example:
+
+//Attached file-multipart/form-data
+var request3 = new RestRequest("upload", Method.Post);
+
+ 
+
+request3.AddParameter("description", "Weekly report");
+request3.AddFile("file","/path/to/report.pdf","application/pdf");
+
+ 
+
+var response3 = await client.ExecuteAsync(request3);
+
+When there is at least 1 file, the entire request will be multipart/form-data
+
+Each parameter is a part, for example:
+
+Content-Type: text/plain; charset=utf-8 
+
+Content-Disposition: form-data; name="description" 
+
+ 
+
+Weekly report
+
+ 
+
+Override the content-type of a parameter in a multipart
+
+When we want a parameter to by JSON:
+
+var parameter = new GetOrPostParameter("someJson", "{\"attributeFormat\":\"pdf\"}")
+{
+    ContentType = "application/json"
+};
+
+ 
+
+request.AddParameter(parameter);
+
+ 
+
+We can also add GetOrPost parameter as a default parameter to the client. This will add the parameter to every request made by the client
+
+Client.AddDefaultParameter("foo","bar")
+
+It will work the same way as request parameters, except that it will be added to every request.
+
+ 
+
+Query string
+
+Query string is the part after the ? sign of the URL, used to pas data in the form of key=value
+
+Querry string used for not body data transfer: filter, search, Paging, sort, flag
+
+Practical examples:
+
+GET  /products?categiry=book&priceForm=10&priceTo=50
+
+GET  /users/page=1&pageSize=20
+
+ 
+
+AddObject-Aggregate multiple parameters from one object, Instead of calling multiple times, we take an object(primitive and collection of primitives only) and RestSharp will decay into multiple parameters.AddParameter.
+
+//AddObject – Aggregate multiple parameters from one object
+var @params = new
+{
+    status = 1,
+    priority = "high",
+    ids = new[] { "123", "456"}
+};
+request.AddObject(@params);
+
+ 
+
+//Equivalent
+request.AddParameter("status", 1);
+request.AddParameter("priority","high");
+request.AddParameter("ids","123,456");
+
+ 
+
+Important:
+
+Support: arrays/list of those types.intstringboolDateTime
+
+Not supported: Nestes/complex objects -> used if JSON is required.AddJsonBody
+
+GET: Parameter to query string. POST(no JSON) to form body() .application/x-www-form-urlencoded
+
+AddObjectStatic<T>: Uses pre-compiled expressions and caches accessors for => type significantly faster when you iterate with the same type(e.g,data-driven, batch calls), 
+
+It cache accesstor for fast ->support for selecting property, sill used.TRequestProperty
+
+public class MyFilter
+
+{
+
+    public int[] Ids { get; set; }
+
+ 
+
+    [RequestProperty(Name = "from", Format = "O")] // ISO 8601
+
+    public DateTime FromUtc { get; set; }
+
+}
+
+ 
+
+var filter = new MyFilter {
+
+    Ids = new[] { 1, 2, 3 },
+
+    FromUtc = DateTime.UtcNow
+
+};
+
+ 
+
+var req = new RestRequest("get");
+
+ 
+
+// Dùng AddObjectStatic cho phần primitive 1-1
+
+req.AddObjectStatic(filter);
+
+ 
+
+// Tự xử lý repeated keys (thay vì mặc định "1,2,3")
+
+foreach (var id in filter.Ids)
+
+    req.AddQueryParameter("ids", id.ToString());
+
+ 
+
+// Execute...
+
+ 
+
+URL Segment
+
+The segment URL is used to replace then placeholder in the path of the request
+
+The placeholder has a form in(e.g.,).{name}Resource"health/{entity}/status"
+
+different from query string() and body(JSON/form).?key=value
+
+example 
+
+var request = new RestRequest("health/{entity}/status")
+
+      .AddUrlSegment("entity","s2");
+
+//when execute ->URL;health/s2/status
+
+RestSharp will match the name to the parameter(none) and breplace it with.{entity}"entity"{}"s2"
+
+Set the default UrlSegment on the client 
+
+Can configure a default segment for every request made form that client:
+
+var client = new RestClient("URL");
+
+client.AddDefaultUrlSegment("foo", "bar");
+
+ 
+
+var req = new RestRequest("v1/{foo}/ping"); // → v1/bar/ping
+
+Issue: No issues today
+
+Plan for tomorrow : Continue learning RestSharp

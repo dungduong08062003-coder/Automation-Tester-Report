@@ -1,0 +1,77 @@
+Report 21/1/2026
+
+today I learn:
+
+I researched and read
+
+Reqnroll
+
+define : Reqnroll is framework BDD(Behavior-Driven Development) open source for .NET, create as a legacy/reboot  version of SpecFlow
+
+Driver Pattern
+
+Driver Pattern is intermediate layer located between Step definitions and automation code (like selenium or API code)
+
+It help split automation logic from BDD steps  to step definitions is short and easy to read
+
+Step definitions Step definitions are C# Methods use to Behavior for each Gherkin sentence in the .feature file
+
+Behavior-driven Development
+
+define : It is a software development method about agile. focus about describe expected behavior of system by natural language(English, Vietnamese,..),easy to understand, Business Developer QA shared common a goal.
+
+BDD use Behavioral Scenarios described by Given-when-then structure.
+
+Given(context)
+
+When(Action occurs)
+
+Then(expected result)
+
+Feature Files
+
+The feature files are the files that contain the BĐ executable specification
+
+the feature files are plain text files with the  .feature extension.
+
+feature file should be saved in UTF-8 to avoid character errors.
+
+Feature Language
+
+Gherkin
+
+Gherkin is language use to writing Feature Files, It defined by cucumber and  regnroll used to described BDD behavior
+
+Gherkin uses a set of special keywords to give structure and meeting  to executable specifications. 
+
+Some the important Gherkin path:
+
+Feature : the title decribe the large function, at the beginning the file .feature
+
+Rule:   define  small business rule within feature, use to "group logic" according to related rule
+
+Background: run before  Scenario in feature , use to set up general context  
+
+scenario :in independent testing case, include steps: Given, when, then, and, but
+
+Scenario Outline: can run multiple time with multiple dataset
+
+Steps(Given-When-Then-And-But): 
+
+Given: Describe an The intial state 
+
+when: Describe an event
+
+Then: Describe an expected outcome
+
+IDE integration
+
+practice writing file .feature build structure by reqnroll
+
+ 
+
+Issue : No Problem
+
+ 
+
+Plan tomorrow: continue learn reqnroll document

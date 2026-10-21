@@ -1,0 +1,75 @@
+Report 16/1/2026
+
+Today I learning
+
+ 
+
+How to Handle Window in Selenium C#?
+
+On an HTML page, a link can open up in a new window, to identify an opened browser window Selenium driver keep a map of Opened window and Window handle
+
+Window Handle is a unique string value that uniquely identifies a browser window
+
+To get Handle Window se use to methods CurrentWindowHandle-WindowHandles
+
+CurrentWindowHandle will return a string, that identify the current focused the browser window 
+
+when do we use it? To store the parent window, return the original window after processing the child window
+
+WindowHandles return a ReadOnlyCollection(the list you can read but not change)of all Window Handles of all browser that we were  opened 
+
+driver.Switch().Window(String WindowHandle)//that command switch driver control from parent window to child window
+
+some case we need multiple window:
+
+Login using a third party like Google/ Facebook/Microsoft
+
+click link, open new tab
+
+Implicit Wait Command 
+
+Implicit Wait used to inform  WebDriver that there could be case the Website Element not present Instanneously
+
+Default value of implicit wait is đ seconds. that mean it will throw an exception if element is not found.
+
+Polling 250ms that mean selenium queries DOM once  every 250ms
+
+Implicit wait applies for the session this mean It apply for all findElement/findElements, Unconditional Wait. I things this is most important to decide we should use Implicit Wait or Explicit Wait
+
+Implicit Wait can be changed the wait time every time in the session like:
+
+driver.Manage.Timeouts.ImplicitWait() = TimeSpan.FromSeconds(5);
+
+IWebElement a = driver.findElement(by.Xpath("....."));  
+
+driver.Manage.Timeouts.ImplicitWait() = TimeSpan.FromSeconds(10);
+
+if the element is not found within the specified limit of the Implicit Wait, a NoSuchElementException is throw by Webdriver.
+
+Explicit Waits FluentWaits in selenium C#
+
+FluentWait is platform class, allow configuration: timeout, polling interval, ignore exception, conditional
+
+Explicit Wait is wrapper of FluentWait 
+
+Explicit Wait set conditional for every findElement/findElements , 1 Explicit Wait Command apply 1 specific action in website element
+
+Most website nowadays are dynamic website , element can change every day so we should use Explicit Wait .
+
+Switch Command
+
+the new pop up window(or new tab)show another html page that open new context, so we should switch context to the new window and the we can communicate with the new window
+
+driver.SwitchTo().Alert() switch context to alert box
+
+driver.SwitchTo().Frame() switch context to frame/Iframe
+
+driver.SwitchTo().ParentFrame()  return parent frame if you are on nested frame 
+
+driver.SwitchTo().DefaultContent() return Main Page 
+
+driver.SwitchTo().Window() switch context to specific window or popup 
+
+issue : No problem today
+
+Next week's plan: learning Automation Framework

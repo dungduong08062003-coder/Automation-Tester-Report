@@ -1,0 +1,159 @@
+Report 29/1/2026
+
+Today I learn API,
+
+API allows system A  to communicate with system B
+
+An API is a communication contract between systems
+
+System A : Client(UI, Mobile app,....)
+
+System B: Server(Backend )
+
+send requests and receive responses
+
+API request always has :
+
+GET - GET data
+
+POST - create resource 
+
+PUT/PATCH - update
+
+DELETE - remove
+
+URL
+
+can be has:
+
+header
+
+Body (if applicable)
+
+API responses returns 3 requirements:
+
+ Status Code
+
+200: OK
+
+201: Created
+
+400: Bad request
+
+401: Unauthorized
+
+404: Not found
+
+500: Server error
+
+       2. Header (Content-type: Application/json )
+
+       3.Body(JSON)
+
+       {
+
+         "id":12,
+
+         "name": Dung,
+
+         "role": user
+
+       }
+
+what does automation tester use API for ?
+
+Backend testing: Instead of testing through the UI, the tester directly test the backend logic 
+
+example:
+
+Create user -> API
+
+Update profile -> API
+
+checkout order -> API
+
+Validate data before UI test
+
+example :
+
+ Send request API create product
+
+Check API return productID
+
+open UI-> check product display is True
+
+Validate data after UI test
+
+example
+
+UI checkout successful
+
+API Calls / Order/{id}
+
+Call DB checkout:
+
+Order exists
+
+ Accurate Data
+
+RESTful API:
+
+REST stands for Representational State Transfer, it is  a way of designing systems so that applications can communicate each other over a network in a simple, low-dependency, and easily scalable way
+
+REST defines 6 architectural constrains that a web service must follow to be considered RESTful. 
+
+Client-server: The system clear divided into roles 
+
+Client: Send request, display , Interface processing
+
+Server : logic processing, data manage.
+
+the two sides can develop and change independently
+
+ 
+
+Stateless : Server no save the client's state between requests
+
+each request must :
+
+self-contained full information.
+
+Independent of previous request.
+
+Cacheable: the response from the server should indicate whether it can be cached or not 
+
+Client or proxy can be cache response
+
+ Helps reduce server load, increase performance
+
+Uniform Interface
+
+API must have the interface consistent, predictable, including:
+
+Resource identified by URI
+
+Use the standard HTTP method 
+
+Data exchanged by representation(JSON /XML)
+
+Format, naming, status code synchronize the whole system
+
+layered System: the system can consist of multiple intermediate layer that the client does not need to know
+
+Load balancer
+
+gateway
+
+Authentication Layer
+
+Cache layer
+
+the Client only know : "I send request, I receive response "
+
+ 
+
+Code on demand (optional): the server can send the code back to the client for execution. 
+
+Issue : no issues today 
+
+plan for tomorrow: Practice RESTful API

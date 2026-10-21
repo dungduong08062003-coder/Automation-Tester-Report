@@ -1,0 +1,119 @@
+report 23/1/2026
+
+today I learn
+
+Regular expressions(Regex)
+
+Regex is a language describe text pattern
+
+in .NET, regex is used through the System.Text.RegulaExpressions.Regex  class
+
+Regex is used do : validate data(email, phone number, password), Search text, take value from string(like number in URL), replace according to pattern, process log file or string data  
+
+some functions we often use :
+
+IsMatch()
+
+Does this text contain something that matches my pattern
+
+return: true or false
+
+type: Boolean 
+
+purpose: to check or validate
+
+example : Regex.IsMatch("abc@gmail.com,@"^\w+\@\w+$");// return true or false
+
+Match()
+
+give me the first match you find
+
+return : a match object 
+
+purpose: To retrieve the first matching result 
+
+example : 
+
+var pattern = @"\d+";
+var match = Regex.Match("Total: 150 USD", pattern);
+Console.WriteLine(match. Value);//output 150
+
+Matches 
+
+return a collection take all matches according to pattern regex
+
+Return : MatchCollection(a collection of Match objects)
+
+Type : MatchColection
+
+purpose: To find every match in text
+
+example
+
+MatchCollection results = Regex.Matches("11fff22dddd33",@"\d+");
+foreach (Match match in results) {
+    Console.Write(match.Value+" ");
+}//output 11 22 33
+
+replace()
+
+replace character in string
+
+example:
+
+string result = Regex.Replace("abc123def",@"\d+","#") ;// result = abc#def
+
+ 
+
+Commonly used RegexOptions
+
+RegexOptions.IgnoreCase: Case-insensitive
+
+Console.WriteLine(Regex.IsMatch("HELLO", "hello", RegexOptions.IgnoreCase));//output True
+
+RehexOptional.Multiline
+
+^= beginning of each line(not string)
+
+$=end of each line(not string)
+
+use when text have multiple line
+
+example: 
+
+string text = "abs1111\nmotconvit";
+Console.WriteLine(Regex.IsMatch(text, "^motconvit", RegexOptions.Multiline));
+
+RegexOptions.Singleline
+
+the period(.)match everything-> . no match breaks line
+
+example
+
+string text = "abs\ndcnb";
+Console.WriteLine(Regex.IsMatch(text,"abs.dcnb", RegexOptions.Singleline)); false
+
+ 
+
+string text = "abs\ndcnb";
+Console.WriteLine(Regex.IsMatch(text,"abs.dcnb", RegexOptions.Singleline)); //True
+
+ 
+
+RegexOptions.Compiled
+
+regex is compiled into machine code for faster excecute 
+
+good for Regex that are used repeatedly(validate large amount of data)
+
+it's not recommend for single-run regex because compilation takes time initially. 
+
+RegexOptions.CultureInvariant
+
+remove in the influence of the system's culture(vi-VN.en-US, etc) help ensure regex  consistent results 
+
+(regex consistent is mean behaves the same every where, no matter the culture/language settings of the system)
+
+issue: I have no problem today
+
+Plan for next monday: Continue learning escapes, character classes, anchors, quantifiers, group

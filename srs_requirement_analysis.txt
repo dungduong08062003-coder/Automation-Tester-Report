@@ -1,0 +1,19 @@
+1. XPath khi mà gặp các Dynamic element
+
+ví dụ danh mục sản phẩm nó sẽ thay đổi mỗi ngày kiểu hôm nay <a class ="sc-8b415" ;...> hôm sau<a class = "sc-1a234">
+
+thì ta dùng  hàm contains //a[Contain(@class,'sc-'")] hoăc  chúng ta tìm kiếm theo trục ví dụ trong 1 dãy <div> về sản phẩm thì class nó sẽ thường sẽ  không thay đổi vì nó liên quan đến cả database->backend->API và mấy thứ khi làm frontend vậy nên ta có thể định vị các element thông qua định vị theo trục Descendant 
+
+ 
+
+2. So Sánh Implicit Wait và Explicit Wait
+
+Implicit sẽ áp dụng cho toàn bộ test script còn Explicit sẽ áp dụng cho từng lệnh củ thể 
+
+Implicit sẽ viết 1 lần còn Explicit sẽ viết theo từng lệnh
+
+Thời gian chờ Implicit sẽ cố định áp dụng cho toàn bộ findElement/findElements còn Explicit có thể set cho từng lệnh khác nhau
+
+Implicit ra đời trước mục đích ban đầu là viết script đơn giản và không cần wait nhiều lần nhưng hiện nay website chủ yếu là dynamic website nên Implicit nó không còn phù hợp ví dụ element có thể có trong DOM nhưng chưa visible/clickable implicit wait sẽ fail (ElementNotInteractableException) , Con Explicit wait nó sẽ chờ điều kiện cụ thể (text present, clickable, visibility,...) nên sẽ linh hoạt chính xác
+
+Kết luận có thể dùng Implicit Wait trong trường hợp website là website tĩnh những hầu hết hiện nay đã không còn phổ biến , còn gặp dynamic website thì dùng Explicit Wait

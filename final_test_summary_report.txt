@@ -1,0 +1,95 @@
+Report for 30/1/2026,
+
+API documentation is a technical content deliverable that contains all information required to work with the API:
+
+API overview 
+
+Base URL
+
+Authentication method 
+
+Endpoint (path)
+
+HTTP methods(GET/POST/PUT/DELETE)
+
+Details about the functions
+
+Request parameters
+
+Response codes and data
+
+Status codes 
+
+Error handling
+
+Data formats (JSON, XML)
+
+Technical content deliverable : A finished technical document or artifact that provides all necessary information for users to work with a technical system.
+
+Swagger API Documentation
+
+Swagger is a technical API documentation generated from an API specification.
+
+Sow it works 
+
+Backend developers write an OPEN API  specifications (.yaml/.json)
+
+Swagger UI reads it
+
+It shows: Endpoints, method(GET, POST,...), parameters, requests/ Response schemas, status codes 
+
+Word  API documentation:
+
+It is a human-written document explaining the API:
+
+Usually created in :
+
+Word
+
+Confluence 
+
+Google Doc
+
+Markdown/Wiki
+
+It contains API overview, Business rules, Authentication explanation, Use cases , Diagrams , Examples and notes that Swagger not explain well
+
+ 
+
+API testing methodologies
+
+input-> Executable program(black box(black-box testing, where testers do not know how the code is implemented -> output
+
+Authentication tokens give permission to access an API (like a key) , while usage tokens (such as in AI API) represent how much you pay for using service(like money)
+
+Synchronous(sync): A synchronous API call blocks execution until the server returns a response. You wait until the API finishes and return a response.
+
+Asynchronous(async) : An asynchronous API call returns immediately and processes the request in the background, delivering the results later . You don't wait. The API works in the background and response later
+
+Deserialize:  Convert received data(usually JSON) into the object that your program can use 
+
+Serialize: Convert an object into a format(usually JSON) that can be sent or stored 
+
+RestSharp is a wrapper around HttpClient that allows you to do the following:
+
+Add default parameters of any kind (not just headers) to the client, once
+
+Add parameters of any kind to each request (query, URL segment, form, attachment, serialized body, header) in a straightforward way
+
+Serialize the payload to JSON or XML if necessary
+
+Set the correct content headers (content type, disposition, length, etc.)
+
+Handle the remote endpoint response
+
+Deserialize the response from JSON or XML if necessary
+
+API client the best way to call an external HTTP API is create  a typed client, which encapsulates RestSharp call and don't expose the RestClient instance in public.
+
+External HTTP API is an API that hosted outside your system and accessed over  HTTP/HTTPS
+
+example : Payment APIs(Paypal), Map API(google maps), Authentication APIs(OAuth providers), AI API (chatgpt OpenAI), Social API(facebook, X)
+
+Issue: No issues today 
+
+Plan for next week: Continue learning RestSharp

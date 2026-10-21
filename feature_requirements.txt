@@ -1,0 +1,225 @@
+Feature: <Tên chức năng>
+
+ 
+
+  Scenario: <Tên kịch bản>
+
+    Given <điều kiện ban đầu>
+
+    When <hành động>
+
+    Then <kết quả mong đợi>
+
+ 
+
+Scenario Outline dùng để làm gì?
+👉 Để chạy CÙNG MỘT kịch bản test với NHIỀU bộ dữ liệu khác nhau mà không phải viết lại Scenario.
+
+Nói ngắn gọn:
+
+Scenario Outline = Test data-driven trong BDD
+
+ 
+
+Scenario Outline: Login with many accounts
+
+  Given user is on login page
+
+  When user enters username "<username>" and password "<password>"
+
+  Then login result should be "<result>"
+
+ 
+
+Examples:
+
+  | username | password | result  |
+
+  | admin    | 123456   | success |
+
+  | admin    | wrong    | failed  |
+
+  | guest    | 123456   | failed  |
+
+
+
+using System.Text.RegularExpressions;
+
+using Microsoft.Playwright;
+
+using Microsoft.Playwright.NUnit;
+
+using NUnit.Framework;
+
+ 
+
+namespace PlaywrightTests;
+
+ 
+
+[Parallelizable(ParallelScope.Self)]
+
+[TestFixture]
+
+public class PracticeTestNest : PageTest
+
+{
+
+    [SetUp]
+
+    public async Task Setup()
+
+    {
+
+        await Page.GotoAsync("https://dungdalaicam08062003.github.io/FrontTestNech/HomePage/homepage.html");
+
+    }
+
+    public async Task HasTitle()
+
+    {
+
+        await Expect(Page).ToHaveURLAsync( new Regex(".*/FrontTestNech/HomePage/homepage.html"));
+
+        await Expect(Page).ToHaveTitleAsync( new Regex("LAPTOP TECHNEST"));
+
+    }
+
+    [Test]
+
+    public async Task ActionOnWebsite()
+
+    {
+
+        await HasTitle();
+
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Thêm giỏ" }).First.ClickAsync();
+
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Thêm giỏ" }).Nth(1).ClickAsync();
+
+        await Page.GetByText("ASUS VivoBook").ClickAsync();
+
+        await Page.Locator("#pdMainImg").ClickAsync();
+
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Thêm vào giỏ" }).ClickAsync();
+
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Ảnh sau" }).ClickAsync();
+
+        await Page.Locator("#pdMainImg").ClickAsync();
+
+        await Page.GetByText("‹ › Mô tả Thông số kỹ thuật CPU Intel Core i5 RAM 8GB Storage 512GB SSD Giá gốc").ClickAsync();
+
+        await Page.GetByRole(AriaRole.Link, new() { Name = "LAPTOP TECHNEST" }).ClickAsync();
+
+        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Tìm kiếm sản phẩm..." }).ClickAsync();
+
+        await Page.GetByRole(AriaRole.Textbox, new() { Name = "Tìm kiếm sản phẩm..." }).FillAsync("dddddddd");
+
+        await Page.GetByRole(AriaRole.Button, new() { Name = "🔍" }).ClickAsync();
+
+        await Page.GetByText("Dell G15 Gaming").ClickAsync();
+
+        await Page.GetByRole(AriaRole.Button, new() { Name = "👤 Tài khoản" }).ClickAsync();
+
+        await Page.GetByRole(AriaRole.Link, new() { Name = "LAPTOP TECHNEST" }).ClickAsync();
+
+        await Page.GetByText("HP Pavilion").ClickAsync();
+
+        await Page.GetByText("‹ › Mô tả Thông số kỹ thuật CPU Ryzen 5 RAM 16GB Giá gốc: -- Giá Sale: 17.000.").ClickAsync();
+
+    }
+
+}
+
+Feature: <Feature name>
+
+ 
+
+  <Short description of the feature>
+
+ 
+
+  Background:
+    Given <common precondition>
+
+ 
+
+  Scenario: <Scenario name>
+    Given <initial context>
+    When <action>
+    Then <expected result>
+
+ 
+
+  Scenario: <Another scenario>
+    Given ...
+    When ...
+    Then ...
+
+ 
+
+  Scenario Outline: <Scenario template name>
+    Given <context>
+    When <action with "<parameter>">
+    Then <expected "<result>">
+
+ 
+
+    Examples:
+      | parameter | result |
+      | value1    | output1 |
+      | value2    | output2 |
+
+
+
+How Given / When / Then / And work together
+
+Given
+
+Preconditions / setup
+
+examples:
+
+given the user is on the shopping home page
+
+given the user is logged in
+
+ 
+
+when 
+
+user actions
+
+examples
+
+when the user searches for product "Laptop"
+
+when the user adds the product to cart
+
+Browser state, login, existing data
+
+Then
+
+Expected result (assertions)
+
+Examples:
+
+Then the cart should contain 1 product
+
+Click, type, select, submit
+
+ 
+
+And
+
+Continue previous step type
+
+Given A
+
+And B   → still GIVEN
+
+ 
+
+When C
+
+And D   → still WHEN

@@ -1,0 +1,153 @@
+Report 26/1/2026
+
+today I learn, 
+
+Regex or regular expression is a pattern language that programmer define to bind, search or extract data within the sequence 
+
+some metacharacters group:
+
+"."  match any characters
+
+"^" begin of the sequence 
+
+"$" end of the sequence
+
+"[]" match a character in list within opening square bracket and close square bracket
+
+example :[abc] match a or b or c example 
+
+//var match = Regex.Matches(input, pattern);
+//var values = match.Select(m => m.Value);
+//Console.WriteLine(string.Join(", ", values));
+
+input: Duong anh dung was born 2003 and live in vietnam
+pattern: abc
+output: a, a, b, a, a
+
+"[^]" negative character class this mean match the character no include character set in []
+
+example Regex.Replaces(input, "[^A-Za-z]","") delete or replace all characters not letter by ""
+
+"()" Group: gather many characters become a group, apply repeat (+,*,{}) in group, create Capturing Group ->use again \1,\2 ,create OR complicated group(abc|def)
+
+"|" OR example: cat|dog ->match "cat" or "dog", (yes|no) match "yes" or no
+
+"\"escape (change the meaning of the character), Escape have two functions: 
+
+change specials character to normal character(\. match the real dot, \* match sign *, \+ match sign +, \| match sign |)
+
+change normal character to specials character(\d digit(0-9), \w word char(A-Z, a-z, 0-9,_), \s whitespace, \b word boundary,\t tab, \n newline,\r carriage return)
+
+Character Classes [] define a set characters, any one of which can occur in an input string for a match to succeed :
+
+\d digit ->123...,
+
+\w letter+ number+ ->word_word1
+
+\s whitespace ->  space, tab
+
+\D not digit 
+
+\W Not word 
+
+\S Not whitespace
+
+Quantifiers : Quantifiers specify how many instances of a character, group, or character classes must be present in the input for a match
+
+to be found
+
+* matches zero or more times
+
++ matches one or more times 
+
+? matches zero or one times
+
+{n} matches exactly n times
+
+{n, } matches at least n times
+
+{n, m} matches from n to m times 
+
+Anchors  specify a position in the string where a match must occur
+
+^ beginning the string
+
+$ end of  the string
+
+\b word boundary example : /bcar/b car is Toyota oto ->match car , ccccar -> not match
+
+\B not word boundary
+
+Groups 
+
+() sign help split regex to the subexpression and capture match string part.
+
+Match a subexpression that's repeated in the input string
+
+apply repeat across the entire character cluster
+
+use group in Replace to reuse value 
+
+take value of each group to match. Groups in C#
+
+capturing vs Non-capturing group
+
+Capturing group(...) store match result, have index: Group[1], Group[2],....
+
+Non-Capturing group(?:...) match but not store 
+
+example ;
+
+var inputPart_1 = "[a-zA-Z]";
+var inputPart_2 = "[0-9]";// match chữ số từ 0-9
+var inputPart_3 = @"\D";//không match chữ số
+var inputPart_4 = @"o{2,}";// match o mà o bị lặp loooooooooooop
+var input_5 = @"\bc\w*";//Tìm tất cả từ bắt đầu bằng ký tự c.
+var input_6 = @"\.+";//Match tất cả dấu chấm thật.
+var input_7 = @"\S+";//Match tất cả ký tự không phải khoảng trắng.
+var input_8 = @"\b[ab]+\b";//Match tất cả từ có chỉ 1 ký tự a hoặc b.
+var input_9 = @"...";//Match từ 3 ký tự bất kỳ
+var input_10 = @"^ab"; //Tìm match “ab” nhưng chỉ khi nó ở đầu chuỗi.
+
+ 
+
+ 
+
+var input_11 = @"\d{4}";//Match các số theo dạng YYYY.
+var input_12 = @"\w+@\w+";//Match email đơn giản dạng\
+var input_13 = @"\b(\w+)\s+\1\b";//Match chuỗi dạng “go go” hoặc “hello hello” (từ lặp lại).
+var input_14 = @"^0(?:3|5|7|8|9)(\d{4}$)"; //Match số điện thoại VN dạng 0XYYYZZZ; X = 3/5/7/8/9; Y, Z = chữ số
+var input_15 = @"\b\w*ing\b"; //Match tất cả từ kết thúc bằng ing.
+var input_16 = @"\b(?:abc|def)\b";//Match chuỗi abc hoặc def (dùng OR).
+var input_17 = @"[a-zA-Z]{2}\d{3}";//2 chữ cái + 3 số
+var input_18 = @"^https?:\/\/\S+";//Match tất cả URL dạng bắt đầu bằng http:// hoặc https://.
+var input_19 = @"[+-]?\d+";//Match tất cả số nguyên hoặc số âm:
+var input_20 = @"\bcat\b";//Match tất cả lần xuất hiện của từ độc lập "cat" (dùng \b).var inputPart_1 = "[a-zA-Z]";
+var inputPart_2 = "[0-9]";// match chữ số từ 0-9
+var inputPart_3 = @"\D";//không match chữ số
+var inputPart_4 = @"o{2,}";// match o mà o bị lặp loooooooooooop
+var input_5 = @"\bc\w*";//Tìm tất cả từ bắt đầu bằng ký tự c.
+var input_6 = @"\.+";//Match tất cả dấu chấm thật.
+var input_7 = @"\S+";//Match tất cả ký tự không phải khoảng trắng.
+var input_8 = @"\b[ab]+\b";//Match tất cả từ có chỉ 1 ký tự a hoặc b.
+var input_9 = @"...";//Match từ 3 ký tự bất kỳ
+var input_10 = @"^ab"; //Tìm match “ab” nhưng chỉ khi nó ở đầu chuỗi.
+
+ 
+
+ 
+
+var input_11 = @"\d{4}";//Match các số theo dạng YYYY.
+var input_12 = @"\w+@\w+";//Match email đơn giản dạng\
+var input_13 = @"\b(\w+)\s+\1\b";//Match chuỗi dạng “go go” hoặc “hello hello” (từ lặp lại).
+var input_14 = @"^0(?:3|5|7|8|9)(\d{4}$)"; //Match số điện thoại VN dạng 0XYYYZZZ; X = 3/5/7/8/9; Y, Z = chữ số
+var input_15 = @"\b\w*ing\b"; //Match tất cả từ kết thúc bằng ing.
+var input_16 = @"\b(?:abc|def)\b";//Match chuỗi abc hoặc def (dùng OR).
+var input_17 = @"[a-zA-Z]{2}\d{3}";//2 chữ cái + 3 số
+var input_18 = @"^https?:\/\/\S+";//Match tất cả URL dạng bắt đầu bằng http:// hoặc https://.
+var input_19 = @"[+-]?\d+";//Match tất cả số nguyên hoặc số âm:
+var input_20 = @"\bcat\b";//Match tất cả lần xuất hiện của từ độc lập "cat" (dung \b).
+
+issue: I have no problem today
+
+Plan tomorrow : Continue learning reqnroll

@@ -1,0 +1,145 @@
+Report 27/1/2026,
+
+Today I learn
+
+Scoped  Bindings: limit of the step definitions or hooks that there just apply only one certain range, instead of applies for the entire project
+
+you can limit the execution of scoped bindings by tag, feature(using feature file), scenario(using scenario file)
+
+Dependency  Injection is a simple mechanism in reqnroll:
+
+ 
+
+create POCOs , simple.NET classes, representing the shared data(POCO is normal class, no inheritance, not framework, no attribute)
+
+inject it on all Steps definitions / Hooks need uses
+
+ensure each scenario have a separate instance 
+
+context  Injection is used to share data  between  steps in a scenario, that no need use static or global varriable, example (store user's login information, API response, product ID, BrowserDriver, previous state)
+
+Scenario outline that use a scenario many time with many difference dataset that help avoid copy paste  many similar Scenario , gather a lot of repeat test case in a template  
+
+scenario have two part :
+
+Scenario Ouline- describe template 
+
+Examples - table repeat data
+
+expamle:
+
+structure
+
+Scenario Outline : scenario name 
+
+     Given ....
+
+     When ......
+
+     Then .......
+
+Examples 
+
+|column1|column2|
+
+|  value1  |  value2  | 
+
+|  value3  |  value4  | 
+
+|  value5  |  value6  | 
+
+ 
+
+Scenario Outline: Search product in website
+
+   When I search "<NameProduct>"
+
+   Then website will display "<NameProduct>"
+
+    Examples:
+
+    | iPhone 11 |
+
+    | iPhone 12 |
+
+    | iPhone 14 |
+
+    | iPhone 17 |
+
+Cucumber Experessions
+
+It is a way that write pattern to mapping step in feature file with step definition, like regex but(more simple for read and write, automate parameter conversion )
+
+ expamle
+
+feature file 
+
+Given the user logs in with user name "dung" and password "123"
+
+Step Definition using Cucumber Expression
+
+[Given("the user logs in with username {string} and password {string}")]
+
+public void Login(string username, string password){
+
+//code
+
+}
+
+Background is  used repeat steps that all scenario is needed 
+
+examples:
+
+open login pages
+
+initialize session
+
+Was user's state?
+
+ reset general initial condition 
+
+Scenario: Login success
+
+  Given I am on the login page
+
+  When I login with "user1" and "pass1"
+
+  Then I see the dashboard
+
+ 
+
+Scenario: Login fail
+
+  Given I am on the login page
+
+  When I login with "wrong" and "user"
+
+  Then I see error
+
+ 
+
+use Background
+
+ 
+
+Background:
+
+     Given I am on the login page
+
+Scenario: Login success 
+
+     When I login with "user1"and "pass1"
+
+      Then I see the dashboard
+
+Scenario: Login fail
+
+      When I Login with "wrong" and "user"
+
+      Then I see error
+
+practice automation testing in demoqa
+
+issue: I have no problem today
+
+Plan tomorrow : Continue learning reqnroll and  practice automation testing in demoqa

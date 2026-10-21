@@ -1,0 +1,232 @@
+report 3/2/2026
+
+Dependency Injection 
+
+RestSharp provide the package RestSharp.Extensions.DependencyInjection to integrate with Microsoft Dependency Injection.
+
+It supports the use of IHttpClientFactory to properly manage the lifecycle of HttpMessageHandle instances:
+
+This avoids socket exhaustion when RestClient is registered as a transient dependency.
+
+It also handles DNS rotation when the endpoint changes its IP address, avoiding the issue of "freeze" DNS that can occur when using a long-lived singleton HttpClient.
+
+Best practice:
+
+Register RestClient as a transient service  and rely on IHttpClientFactory to manage the HttpMessageHandle lifecycle
+
+DI helps control headers per client, apply policies  per named client, and avoid the caching pitfalls of the simple client factory. 
+
+Reusing HttpClient
+
+Method 1: Pass an HttpClient or HttpMessageHander directly to the constructor
+
+example: 
+
+var httpClient = new HttpClient();
+
+// can be set BaseAddress if need:
+
+//httpClient.BaseAddress = new Uri("https://api.example.com");
+
+var client = new RestClient(httpClient);
+
+ Important note: when providing tour own HttpClient or HttpMessageHandler, not all RestClientOptions will be applied. Only a limited set of options will still work: HttpClient
+
+BaseAddress is used to set the base address of the HttpClient instance if it has not already been set.
+
+MaxTimeout is used to cancel the request via a CancellationTokenSource when the timeout is exceeded.
+
+UserAgent will be added to the RestClient.DefaultParameters list as a HTTP header. This will be added to each request made by the RestClient, and the HttpClient instance will not be modified. This allows HttpClient instance to be reused in scenarios where different User-Agent headers are required.
+
+Expect100Continue: Control behavior Expect: 100-continue
+
+Method 2: Simple Http client factory 
+
+Method 3: IHttpClientFactory 
+
+Blazor WebAssembly support 
+
+In Blazor WebAssembly, many RestClient's constructors cannot be used  due to platform limitations.
+
+Only Constructors that accept an HttpClient or httpMessageHandler should be used.
+
+ 
+
+example 
+
+class Post
+{
+    public int UserId { get; set; }
+    public int id { get; set; }
+    public string title { get; set; }
+    public string body { get; set; }
+
+ 
+
+}
+internal class program
+{
+    
+    static async Task Main(string[] args)
+    {
+        RestClient client = new RestClient("https://Api.example.com");
+        //GET
+        RestRequest GetRequest = new RestRequest("/posts/1", Method.Get);
+
+ 
+
+        var post = await client.GetAsync<Post>(GetRequest);
+        Console.WriteLine(post.title);
+        Console.WriteLine(post.body);
+
+ 
+
+        //POST
+        RestRequest PostRequest = new RestRequest("/posts", Method.Post);
+        PostRequest.AddJsonBody(new
+        {
+            title = "hellp restsharp",
+            body = "this is test Post",
+            userId = 1
+        });
+        var response = await client.PostAsync(PostRequest);
+        Console.WriteLine(response.StatusCode);
+        Console.WriteLine(response. Content);
+    }
+}
+
+ 
+
+Preparing requests
+
+Create a request
+
+var request = new RestRequest(resource) // resource is the sub-path of the client base path
+
+The default request type is GET and you can override it by setting the Method property. You can also set the method using the constructor overload:
+
+var request = new RestRequest(resource, Method.Post);
+
+ 
+
+Request header are key-value pairs that are attached to an HTTP request to provide metadata to the server.
+
+Example of common headers:
+
+Authrization
+
+X-API-Key
+
+Accept
+
+User-Agent
+
+The header is not in the body, not in the URL.
+
+AddHeader(string name, string value);
+
+AddHeader<T>(string name, T value);//value will converted to string
+
+AddOrUpdateHeader(string name, string value)// replaces the header if it already exists
+
+ 
+
+Meaning of each one 
+
+AddHeader(string, string)
+
+request.AddHeader("X-Key","abc123");
+
+add a new header
+
+no duplicate string
+
+ 
+
+AddHeader<T>(string,T)
+
+request.AddHeader("X-Retry-Count", 3);
+
+Value will be converted to string
+
+Convenient when transmitting number, enum 
+
+ AddOrUpdateHeader
+
+request.AddOrUpdateHeader("Authorization", "Bearer token");
+
+ if the header exists -> replace 
+
+If you don't have a new add ->This is the safest method 
+
+Example request-level header
+
+var request = new RestRequest("/path").AddHeader("X-key",someKey);
+
+This header:
+
+Applicable to this request only
+
+Does not affect others requests
+
+When to use?
+
+Special header
+
+Request-specific 
+
+Client-level default header
+
+Client.AddDefaultHeader("Authorization", "Bearer token")
+
+The header will be automatically  attached to every client request
+
+No need to re-add each request 
+
+Greate for Authentication, Fixed API key, System header
+
+Best practice
+
+ 
+
+Header Type
+
+Should be mounted at
+
+Authorization
+
+Client
+
+API Key
+
+Client
+
+Correlation / Trace ID
+
+Request
+
+Test-only header
+
+Request
+
+ 
+
+RestSharp automatically sets the Content-Type according to the body you add
+
+ 
+
+Important need Remember
+
+Header = metadata -> not body
+
+AddOrUpdateHeader is the safest
+
+Auth header ->client level
+
+Special header -> request-level
+
+No set Content-Type by AddHeader
+
+Issue: No issues today
+
+Plan for tomorrow : Continue learning RestSharp

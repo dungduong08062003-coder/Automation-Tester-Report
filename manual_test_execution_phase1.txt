@@ -1,0 +1,63 @@
+Report 15/1/2026
+
+ 
+
+How to handle alert and popup box in selenium C#
+
+Alert is a pop up window that comes up on screen, Example user click button or enterred a form, or login the website want user enter additional infomation like the user don't enter the password or user name when login
+
+the user can't action in the website element when Alerts present
+
+Hangding Alert using selenium WebDriver, we have:
+
+IWebDriver driver = new EdgeDriver();
+driver.Navigate().GoToUrl("https://demo.automationtesting.in/Alerts.html");
+driver.FindElement(By.XPath("//div[@class='tabpane pullleft']//descendant::a[@href='#Textbox']")).Click();
+driver.FindElement(By.XPath("//div[@id='Textbox']//descendant::button")).Click();
+
+ 
+
+IAlert alertTest = driver.SwitchTo().Alert();// switch the control of "driver" from window to alert
+
+ 
+
+alertTest.Accept();// simular user click ok button in alert
+alertTest.Dismiss(); // simular user click cancel button of the Alert 
+String a = alertTest.Text;// get the text of the alert
+alertTest.SendKeys("Automation Test ddddddd");//enter the text in textbox of alert
+
+ 
+
+Write Effective Xpaths
+
+ 
+
+XPath in selenium provide xpath functions and axes (or relationship), which helps us to write effective Xpaths of the web elements and locate element
+
+ 
+
+XPath function
+
+Contains(), we use Contains if path of the value of any attribute change dynamically example today elemennt <div id = "user_123">  tomorrow element like  <div id = "user_456"> that is change dynamically we write code driver.findElement(By.XPath("//div[contains(@id,'user_')]"))
+
+start-with(), we use this function when find the element has attribute starting with the specific given character of character sequence in the previous example we code By.XPath("//div[start-with(@id,"user")]") 
+
+ Text() this fuction used locate the element by display content example <h1>aaaaa</h1> To locate this element we code By.Xpath("//h1[text()='aaaaa']")
+
+And or Or to combine two or more  different Conditions like //input[@placeholder='Full name' or @type= 'text']
+
+XPath Axes
+
+ Ancester Axis is used in XPath to select all parent(and Parent of the parent) element of the current node , It's beneficical where wen can identify the node of the child element, we take the child node like a Reference Point and use the Ancestor axis to recognize it parent node //lable[text()='dung']/ancestor::form 
+
+XPath child Axis use to locate all the child node of the current node , the child axis is helpful in locating elements if we can locate the parrent element of the required node //div[@class='tabpane pullleft']/child::div[1]//lable
+
+XPath Descendant Axis used to acess all the children and sub - children of the current node //div[@class='tabpane pullleft']//descendant::a[@href='#Textbox
+
+Parent Axis is similar to acestor axis but is recognizes the immeediate parent of the current node //input[@id="jhdsabgg"]/parent::div
+
+following Axis locate element after the current node
+
+following-sibling Axis locate the element on the same level of the currenr node  
+
+Preceding Axis this locate the element just before that current node

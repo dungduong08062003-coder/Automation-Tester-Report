@@ -1,0 +1,39 @@
+Report 28/1/2026
+
+today I learn,
+
+I practice writing feature files and applying Reqnroll in automation testing on the DemoQA website
+
+selenium action,
+
+Hover  is used when a menu is hidden, for tooltips or hover-based dropdowns. Selenium. Click() does not handle hover actions, so the Actions class is used to hover over an element.
+
+Click (using Actions): Use this when clicking often results in ElementClickInterceptedException, overlays, or hidden elements due to animations.
+
+Double click: use this when website requires double click to open popup or task
+
+Right click:  Use this when the website has a context Menu 
+
+Click & Hold: Use this when  Drag and Drop is complicated
+
+Release : Releases the mouse button after holding is down (used with drag/drop or action chains)
+
+Drag & Drop: use this when UI support native drag and drop (DragAndDrop()),  when the UI not support HTML5 default drag drop  ClickAndHold -> MoveByOffset->Release
+
+Advanced sendkeys : click special Keystrokes (enter , Esc), Shortcut(ctrl C, ctrl A, Ctrl V), input in canvas or custom can't type
+
+Javascript Executor is a tool that allows selenium to run JavaScript directly in the DOM to handle cases that selenium can't handle (click, scroll. set value, trigger event, shadow DOM)
+
+POM Dynamic Locator is write a parameterized method generator builder (text, id, header, index, etc.),prioritize stable selector, can externalize selector to JSON as needed- the goal is to be reusable , easy to change when Ui Changes, and reduce flaky when running tests. By 
+
+DataTable Helpers: A number of helpers implemented as extension methods of the DataTable class make it easier to implement steps that accept a datatable parameter
+
+CreateInstance<T> is a extemsion method of the DataTable class will convert a table in your scenario to a single Instance of a class , we use this extension class when the type table is Vertical Tables(two column match properties name and values) or Horizontal Tables consist of the header row where the header cells match property name and subsequent data rows contain the values assigned to those properties.
+
+CreateSet<T> is use when table have a lot of row (list product/user/book) to run add data ,Authentication 
+
+CompareToIntance<T> used this when we want assert a attribute of a object returned(ex: profile, Person) 
+
+issue: I have no problem today
+
+Plan tomorrow : Continue learning reqnroll and  practice automation testing in demoqa

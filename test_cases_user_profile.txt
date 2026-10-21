@@ -1,0 +1,169 @@
+Report 5/2/2026
+
+Cookies are small pieces of key-value data sent by a server to a client (browser or application)  and stored on the client, used to maintain the state between HTTP requests such as session login, tracking  or personalization.
+
+request.AddCookie(name, value)
+
+Used when: the cookie needs to be attached to the current request
+
+RestSharp will add cookies  from the request to the Cookie headers and then extract matching cookies from the response.
+
+request.CookiesContainer
+
+Used when: We want to include multiple cookies in a request
+
+client.Options.CookieContainer
+
+Used when: we want to share cookies between multiple request of the same RestClient
+
+ 
+
+Request Body is the data sent by a client a server inside an HTTP requests to provide information needed to create, update, or process a resource. 
+
+Request Body is mainly used to:
+
+Create data (POST)
+
+Update data(PUT/PATCH)
+
+Send complex data(JSON, XML, form data, files) 
+
+RestSharp supports multiple ways to add a request body:
+
+AddJsonBody for JSON payloads
+
+AddXmlBody for Xml payloads
+
+AddStringBody for pre-serialized payloads 
+
+String Body is The request body is sent as a pre-serialized string, RestSharp do not automatically serialize data, which Send the whole we provide to the server
+
+AddStringBody is used when you already have a string payload(JSON, XML, Test,....)
+
+ 
+
+JSON body 
+
+When we call AddJsonBody, it does the following:
+
+Serialize object to JSON
+
+Set the content type to application/json
+
+Sets the internal data type of the request body to DataType.Json
+
+It is possible to override the default content type by supplying the content argument.
+
+example : requests.AddJsonBody(param,"text/x-json");
+
+ 
+
+If we use a pre-serialized string with AddJsonBody, it will be sent as-is. That mean The top-level strings won't be serialized as JSON
+
+Top-level strings is assumed to be  pre-serialized payloads 
+
+To overcome this issue 
+
+const string payload = @"
+""requestBody"":{
+    ""content"":{
+        ""application/json"":{
+                ""schema"":{
+                    ""type"":""string""
+                }
+            }
+        }                        
+},";
+request.AddJsonBody(payload, forceSerialize: true);//the string will be serialized
+
+request.AddJsonBody(payload); // the string will NOT be serialized and will be sent as-is
+
+ 
+
+XML Body
+
+When we call AddXmlBody:
+
+Serialized object to XML
+
+Set header (Content-Type: application/xml)
+
+Set body data type (dataType.Xml)
+
+example 
+
+var user = new User { 
+    Id = 1,
+    name = "Dung"
+};
+
+request.AddXmlBody(user);
+
+Body will send:
+
+<User>
+
+  <Id>1</Id>
+
+  <Name>Dung</Name>
+
+</User>
+
+Warning: Do not send XML string to AddXmlBody; it wont work!
+
+If we have the pre-serialized XML, we must use:
+
+string xml = "<User><Id>1</Id></User>"
+
+request.AddStringBody(xml, ContentType.Xml);
+
+ 
+
+Upload file is send request with body format (Content-Type: multipart/form-data)
+
+The Body includes  files (binary data) and difference fields(text/metadata)
+
+Upload file from disk
+
+request.AddFile("file","c:\\file\\img.png","img/png");
+
+ 
+
+Upload byte[]
+
+byte[] bytes = File.ReadAllBytes("image.png");
+request.AddFile("file",bytes,"image.png","image/png");
+
+ 
+
+Upload from stream 
+
+request.AddFile(
+
+        "file",()=> File.OpenRead("image.png"),"image.png","image/png"
+
+);
+
+ AddFile will set all the necessary header, so don't set content header manually
+
+ 
+
+We can provide file upload options to the AddFile call. The options are:
+
+var options = new FileParameterOptions {
+
+    DisableFilenameEncoding = true,
+
+    DisableFilenameStar = false
+
+};
+
+request.AddFile("file", filePath, options; options);
+
+DisableFilenameEncoding (default false): if set to true, RestSharp will not encode the file name in the Content-Disposition header
+
+DisableFilenameStar (default true): if set to true, RestSharp will not add the filename* parameter to the Content-Disposition header
+
+Issue: No issue today
+
+Plan for tomorrow: Learning making calls

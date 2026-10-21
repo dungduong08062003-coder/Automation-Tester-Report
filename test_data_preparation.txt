@@ -1,0 +1,181 @@
+Report 6/2/2026
+
+Making call
+
+There are two group for API calls :
+
+Group 1: APIs that begin with Execute.....
+
+Task<RestResponse> ExecuteAsync(RestRequest request, CancellationToken token = default);
+
+Task<RestResponse> ExecuteGetAsync(RestRequest request, CancellationToken token);
+
+Task<RestResponse<T>> ExecuteAsync<T>(RestRequest request, CancellationToken token);
+
+//.....
+
+ 
+
+The method do not throw exceptions when the server returns HTTP errors(4xx,5xx)
+
+Instead, we check respone.StatusCode, respone.IsSuccessful, respone.Content, Respone.ErrorException
+
+ 
+
+ Group2: APIs that do not begin begin with execute...
+
+ This Group has two types:
+
+ return T (deserialize):
+
+Task<T> GetAsync<T>(RestRequest request, CancellationToken token);
+
+Task<T> PostAsync<T>(RestRequest request, CancellationToken token);
+
+//..,....
+
+these methods throw exceptions when the server error(4xx,5xx) because  RestSharp thorws a exception before returning RestResponse 
+
+Use these methods  when you only care about valid data (happy path) and want to rely on exception flow for errors
+
+       2. return RestResponse (no deserialize) but throw exception
+
+ 
+
+Task<RestResponse> GetAsync(RestRequest request, CancellationToken token);
+
+Task<RestResponse> PostAsync(RestRequest request, CancellationToken token);
+
+//.......
+
+These methods throw exceptions when a server error occurs, even if  the client is configured not to throw exceptions
+
+Use these methods when need the raw response but still want to follow an exception-driven error-handling flow 
+
+ 
+
+Handling Response 
+
+All Execute{Method}Async function return an instance of RestResponse. Execute{Method}Async<T> return a generic instance of RestResponse<T> where T is the response
+
+ 
+
+Property
+
+Type
+
+Description
+
+Request
+
+RestRequest
+
+Request instance that was used to get the response.
+
+ContentType
+
+string?
+
+Response content type. Null if response has no content.
+
+ContentLength
+
+long?
+
+Response content length. Null if response has no content.
+
+ContentEncoding
+
+ICollection<string>
+
+Content encoding collection. Empty if response has no content.
+
+Content
+
+string?
+
+Response content as string. Null if response has no content.
+
+IsSuccessfulStatusCode
+
+bool
+
+Indicates if response was successful, so no errors were reported by the server.
+
+ResponseStatus
+
+None, Completed, Error, TimedOut, Aborted
+
+Response completion status. Note that completed responses might still return errors.
+
+IsSuccessful
+
+bool
+
+True when IsSuccessfulStatusCode is true and ResponseStatus is Completed.
+
+StatusDescription
+
+string?
+
+Response status description, if available.
+
+RawBytes
+
+byte[]?
+
+Response content as byte array. Null if response has no content.
+
+ResponseUri
+
+Uri?
+
+URI of the response, which might be different from request URI in case of redirects.
+
+Server
+
+string?
+
+Server header value of the response.
+
+Cookies
+
+CookieCollection?
+
+Collection of cookies received with the response, if any.
+
+Headers
+
+Collection of HeaderParameter
+
+Response headers.
+
+ContentHeaders
+
+Collection of HeaderParameter
+
+Response content headers.
+
+ErrorMessage
+
+string?
+
+Transport or another non-HTTP error generated while attempting request.
+
+ErrorException
+
+Exception?
+
+Exception thrown when executing the request, if any.
+
+Version
+
+Version?
+
+HTTP protocol version of the request.
+
+RootElement
+
+string?
+
+Root element of the serialized response content, only works if deserializer supports it.

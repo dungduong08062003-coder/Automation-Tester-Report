@@ -1,0 +1,96 @@
+Em gửi Report ngày 14/1/2026
+Buổi sáng 
+em có thử chạy automation trên trang sauce demo theo cấu trúc Pages/Base/TestBase/Utils/Test nhưng chưa chạy được do nhầm lẫn các tham số truyền vào các hàm hoặc là lỗi Locator.
+Buổi chiều em ôn lại các nội dung đã học
+Browers Navigation Command
+
+ví dụ lấy 
+IwebDriver driver = new EdgeDiver();
+
+driver.Navigate().GoToUrl(“đường dẫn”)
+// thực thi 1 hành động điều hướng đến 1 Pages mới bằng đường dẫn mình truyền vào
+driver.Navigate().Back() 
+//Trở lại trang trước đó ví dụ đăng nhập nhấn nút login vào trang chủ dùng lệnh này sẽ trở lại trang đăng nhập 
+driver.Navigate().Forward()
+// dùng sau khi Back() để trở lại trang trước khi ta Back() 
+//Back() và Forward() mô phỏng hành động ta tương tác với nút điều hướng
+driver.Navigate().Refresh()  
+// Mô phỏng hành động nhấn nút f5 hoặc refresh của ta ví dụ khi thêm sản phẩm vào giỏ hàng refresh xem giỏ hàng đã có chưa
+
+WebElement Command
+
+WebElement biểu diễn cái htmlElement, Element là cái thành phần mình thấy trong website ví dụ nút đăng nhập giỏ hàng hay cái sản phẩm, là những cái mà user thấy tương tác hoặc trình duyệt dùng để hiện thị nội dung
+
+Clear(); làm rỗng hay xóa tất cả dữ liệu trong ô input hay TextArea mà ta chỉ định
+
+Click():Mô phỏng hành động nhấn chuột trái vào các Element
+
+Displayed():kiểm tra xem thuộc tính có hiện thị không trả về true/false nếu element hiển thị thì sẽ trả về True, còn nếu bị ẩn dấu là false, còn nếu là không có sẽ throw 1 cái ngoại lệ NoSuchElement
+
+Enabled().kiểm tra xem element có tương tác được không, trả về true hoặc false
+
+Selected() dùng khi ta tương tác với Checkboxes, Select Option, Radio Button True nếu đã được chọn còn false nếu chưa
+
+Submit() hành động nhấn chuột trái khi dùng trong form
+
+Text() trả về nội dung UI hiện thị
+
+TagName() ví dụ <h1>hhh</h1> Trả về là h1
+
+FindElement And FindElements Commands 
+
+FindElement dùng khi có muốn tương tác với 1 Element hoặc Element đầu tiên(nếu không có sẽ Throws ra 1 cái NoSuchElementException)
+
+FindElements dùng khi muốn xử lý nhiều hoặc muốn kiểm tra số lượng duyệt danh sách (không có sẽ trả 1 danh sách rỗng)
+
+
+các cách tìm Element ưu tiên theo thứ tự
+
+1 By.Id là id duy nhất trong DOM truy cập nhanh nhất ít bị thay đổi
+2 By.Name Thường dùng trong Form, ổn định có thể trùng nhưng ít hơn class
+3 By.CssSelector linh hoạt (ví dụ kết hợp nhiều điều kiện input[type=’Password’].form-control)
+4 By.Xpath mạnh nhất nhưng duyệt cây DOM, dễ gãy khi UI đổi layout, chậm
+5 By.ClassName nhiều element dùng chung 1 class hay bị đổi tên class, 
+6 By.LinkText/PartialLinkText dùng khi muốn lấy link từ element mà dev gắn link vào nó
+
+CheckBox & Radio Button Operations in selenium
+
+chúng ta có thể tương tác với CheckBox và Radio  Button thông qua By ID và CssSelector
+
+Selected kiểm tra xem element đã chọn chưa trả về true khi đã chọn, còn nếu không là false
+
+DropDown & Multiple Select Operations
+Multiple là dropdown cho phép chọn nhiều options
+Mô phòng hành vi tương tác với DropDown trong Website 
+Có thể tương tác thông qua ID, Name, CSS/Xpath
+
+hàm SelectElement dùng để tương tác với DropDown dễ hơn chỉ dùng với tag<Select>
+
+1 số lệnh Select
+
+SelecteElement oSelete = new SelectElement(drivger.FindElement(By.ID(“yy_date_8”)));
+oSelect.selectByText(“2012”); //chọn Option có text là 2012
+oSelect.SelectByIndex(4)//dùng khi biết vị trí của option index bắt đầu từ 0
+oSelect.SelectByValue(“4”)// ví dụ <option value = “4”> VN</option>
+
+Ilíst<WebElement> oSelectlíst = oselect.Option;//lấy tất cả Option truyền vào List
+
+elementCount.Count;//số lượng Option
+
+DeSelect là ngược lại của select dùng trong Multiple
+
+DeSelectAll();//bỏ chọn hết
+DeSelectByIndex()//bỏ chọn theo giá trị Index
+DeSelectByValue()// bỏ chọn theo Value
+DeSelectByText()//bỏ chọn option có Text
+
+IsMultiple dùng kể kiểm tra xem nó có cho chọn nhiều Option không trả về giá trị True False
+
+Handle Dynamic Webtables with selenium in C#
+
+ở trong bài này có 1 bài code lấy dữ liệu từ bảng các ngôn ngữ lập trình được dùng nhiều nhất thế giới trên wiki em đã xem lại code (bài code em đã code hôm qua) về cơ bản bài code này dùng vòng lặp foreach để quét hàng sau đó lấy tất cả giá trị của các cột trong hàng rồi in ra
+
+
+Kế hoạch ngày mai 
+Buổi sáng kiểm tra và sửa lỗi trong Code Automation saucedemo
+Buổi chiều ôn lại phần Switches Alerts & Windows
